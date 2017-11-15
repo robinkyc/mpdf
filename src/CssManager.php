@@ -784,13 +784,13 @@ class CssManager
 					}
 				}
 			} elseif ($k == 'BACKGROUND') {
+				/* -- BACKGROUNDS -- */
 				$bg = $this->parseCSSbackground($v);
 				if ($bg['c']) {
 					$newprop['BACKGROUND-COLOR'] = $bg['c'];
 				} else {
 					$newprop['BACKGROUND-COLOR'] = 'transparent';
 				}
-				/* -- BACKGROUNDS -- */
 				if ($bg['i']) {
 					$newprop['BACKGROUND-IMAGE'] = $bg['i'];
 					if ($bg['r']) {
@@ -802,8 +802,7 @@ class CssManager
 				} else {
 					$newprop['BACKGROUND-IMAGE'] = '';
 				}
-				/* -- END BACKGROUNDS -- */
-			} /* -- BACKGROUNDS -- */ elseif ($k == 'BACKGROUND-IMAGE') {
+			} elseif ($k == 'BACKGROUND-IMAGE') {
 				if (preg_match('/(-moz-)*(repeating-)*(linear|radial)-gradient\(.*\)/i', $v, $m)) {
 					$newprop['BACKGROUND-IMAGE'] = $m[0];
 					continue;
@@ -818,6 +817,7 @@ class CssManager
 					$newprop['BACKGROUND-REPEAT'] = strtolower($m[1]);
 				}
 			} elseif ($k == 'BACKGROUND-POSITION') {
+				$bg = $this->parseCSSbackground($v);
 				$s = $v;
 				$bits = preg_split('/\s+/', trim($s));
 				// These should be Position x1 or x2
@@ -848,7 +848,8 @@ class CssManager
 				if ($bg['p']) {
 					$newprop['BACKGROUND-POSITION'] = $bg['p'];
 				}
-			} /* -- END BACKGROUNDS -- */ elseif ($k == 'IMAGE-ORIENTATION') {
+				/* -- END BACKGROUNDS -- */
+			} elseif ($k == 'IMAGE-ORIENTATION') {
 				if (preg_match('/([\-]*[0-9\.]+)(deg|grad|rad)/i', $v, $m)) {
 					$angle = $m[1] + 0;
 					if (strtolower($m[2]) == 'deg') {
